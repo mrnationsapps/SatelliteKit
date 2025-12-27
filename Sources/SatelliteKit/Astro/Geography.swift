@@ -143,6 +143,11 @@ public func geo2xyz(geodetic: LatLonAlt) -> Vector {
 }
 
 /// eci2top [obs→sat in observer topo frame]
+/// 
+/// PREFERRED METHOD for observer-to-satellite calculations when observer lat/lon is known.
+/// Directly uses observer's geodetic coordinates without ECI round-trip conversion.
+/// This preserves observer location accuracy and avoids precision loss from coordinate transformations.
+///
 /// - Parameters:
 ///   - julianDays: JD
 ///   - satCel: sat(x, y, z)
@@ -153,6 +158,10 @@ public func eci2top(julianDays: Double, satCel: Vector, obsLLA: LatLonAlt) -> Ve
 }
 
 /// cel2top [vector obs→sat in observer topo frame]
+/// 
+/// NOTE: This function performs a round-trip coordinate conversion (ECI→geo→topo) which can lose precision.
+/// If you already have observer's lat/lon, use eci2top() instead for better accuracy.
+///
 /// - Parameters:
 ///   - julianDays: JD
 ///   - satCel: sat(x, y, z)

@@ -154,9 +154,9 @@ public extension Satellite {
     func topPosition(julianDays: Double, observer: LatLonAlt) throws -> AziEleDst {
 
         let satCel = try position(julianDays: julianDays)                   // ECI
-        let obsCel = geo2eci(julianDays: julianDays, geodetic: observer)    // ECI
-
-        let top = cel2top(julianDays: julianDays, satCel: satCel, obsCel: obsCel)
+        
+        // FIXED: Pass observer lat/lon directly to transformation instead of round-trip through ECI
+        let top = eci2top(julianDays: julianDays, satCel: satCel, obsLLA: observer)
 
         let z = top.magnitude()
 
